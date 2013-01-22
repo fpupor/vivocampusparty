@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<title>Vivo Campus Party</title>
+	<meta name="description" content="Vivo Campus Party">
+	<meta name="author" content="Wunderman">
+	<link rel="stylesheet" href="css/reset.css" media="all" type="text/css">
+	<link rel="stylesheet" href="css/layout.css" media="all" type="text/css">
+	
+	<meta name="viewport" content="user-scalable=no, width=device-width" /> <!-- Prevent Scaling -->
+	<meta name="apple-mobile-web-app-capable" content="yes" /><!-- Eliminate url and button bars if added to home screen -->
+	
+	<script src="phonegap.js"></script>
+    <script type="text/javascript" charset="utf-8" src="joystick.js"></script>
+</head>
+<body>
+<div id="root">
+	<canvas id="joyControl" width="0" height="0"></canvas>
+	<div id="joyEnter"></div>
+	
+	<script type="text/javascript">
+		var D = document;
+		
+		var delay = 2;
+		var eventup = "ontouchend";
+		var eventdown = "ontouchstart";
+		var eventmove = "ontouchmove";
+		
+		var viewportcancel = function(e){ e.preventDefault(); e.stopPropagation();};
+	
+		try{
+			D.addEventListener('mousemove', viewportcancel, false);
+			D.addEventListener('mouseup', viewportcancel, false);
+			D.addEventListener('mousedown', viewportcancel, false);
+			D.addEventListener('contextmenu', viewportcancel, false);
+		}catch(e){
+			D.onmousemove = viewportcancel;
+			D.onmouseup = viewportcancel;
+			D.onmousedown = viewportcancel;
+			D.oncontextmenu = viewportcancel;
+		}
+		
+		var els = D.getElementsByTagName('*');
+	
+		for(var x = 0; x < els.length; x++)
+				els[x].onmouseup = els[x].onmousedown = els[x].oncontextmenu = viewportcancel;
+		
+		
+		getDocHeight =  Math.max(
+			Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+			Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+			Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+		);
+		
+		getDocWidth = Math.max(
+			Math.max(D.body.scrollWidth, D.documentElement.scrollWidth),
+			Math.max(D.body.offsetWidth, D.documentElement.offsetWidth),
+			Math.max(D.body.clientWidth, D.documentElement.clientWidth)
+		);
+		
+		
+		var lvalue = null;
+		var requestTimer = null;
+		
+		function requestControl(clear, value){
+			clearTimeout(requestTimer);
+			
+			var vCode = ['l', 'ul', 'u', 'ur', 'r', 'dr', 'd', 'dl'];
+			
+			if(value == null){
+				request('c');
+			}else if(clear){
+				request(vCode[value]);
+			}else{
+				requestTimer = setTimeout(function(){
+					request(vCode[value]);
+				}, delay);
+			}
+		}
+		
+		var lastStrURL = null;
+		var lastHttpReq = null;
+		
+		function request(strURL) {
+			if(lastStrURL == strURL)
+				return;
+				
+			lastStrURL = strURL;
+		
+			if(lastHttpReq){
+				lastHttpReq.xmlHttpReq.abort();
+				lastHttpReq.xmlHttpReq=null; 
+			}
+		
+			var xmlHttpReq = false;
+			var self = lastHttpReq = this;
+			
+			if (window.XMLHttpRequest) {
+				self.xmlHttpReq = new XMLHttpRequest();
+			}
+			else if (window.ActiveXObject) {
+				self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			self.xmlHttpReq.open('GET', strURL, true);
+			self.xmlHttpReq.onreadystatechange = function() {
+				if (self.xmlHttpReq.readyState == 1) {
+					if (self.xmlHttpReq) { 
+						self.xmlHttpReq.abort(); 
+						self.xmlHttpReq=null; 
+					}
+				}
+			}
+			
+			self.xmlHttpReq.send();
+		}
+		
+		var canvas = document.getElementById('joyControl');
+		var context = canvas.getContext("2d");
+		
+		canvas.width = getDocWidth;
+		canvas.height = getDocHeight;
+		
+		var stick = new joystick();
+			stick.setBox(0, 0 ,getDocWidth,getDocHeight);
+			stick.init(context);
+		
+		
+		
+		canvas[eventdown] = function(e){
+			e.stopPropagation(); e.preventDefault();
+			stick.press(e.pageX, e.pageY);
+		};
+		
+		canvas[eventup] = function(e){
+			e.stopPropagation(); e.preventDefault();
+			stick.unpress();
+		};
+		
+		canvas[eventmove] = function(e){
+			e.stopPropagation(); e.preventDefault();
+			stick.updatePosition(e.pageX, e.pageY);
+		};
+		
+		var vars = stick.getVars();
+		
+		var enter = document.getElementById('joyEnter');
+		var enterRaio = vars.raioDrag / 2;
+		var enterPositionX = enterRaio + 30;
+		var enterPositionY = getDocHeight - enterRaio - 20;
+		
+			enter.style.top = (enterPositionY - enterRaio) + 'px';
+			enter.style.left = (enterPositionX - enterRaio) + 'px';
+			enter.style.width = enter.style.height = (enterRaio*2) + 'px';
+			enter.style.height = enter.style.height = (enterRaio*2) + 'px';
+		
+		var baseSize = (getDocWidth/100) * 90;
+		var basePositionX = vars.tempScreenPositionX - (baseSize/2);
+		var basePositionY = vars.tempScreenPositionY - (baseSize/2);
+		
+		enter[eventdown] = function(e){
+			e.stopPropagation(); e.preventDefault();
+			request('e');
+		}
+		
+		enter[eventmove] = function(e){
+			e.stopPropagation(); e.preventDefault();
+		}
+		
+		enter[eventup] = function(e){
+			e.stopPropagation(); e.preventDefault();
+			request('c');
+		}
+		
+		setInterval(function(){
+			context.clearRect(0, 0, getDocWidth, getDocHeight);
+			
+			nvalue = stick.getValue();
+			
+			if(nvalue != lvalue){
+				requestControl(lvalue == null, lvalue = nvalue);
+			}
+		
+			stick.draw(context);
+				
+			context.fillStyle = "#9e52c5";
+			context.strokeStyle = "#333333";
+			context.lineWidth = 10;
+			context.beginPath();
+			context.arc(enterPositionX, enterPositionY, enterRaio, Math.PI*2, 0, true);
+			context.stroke();
+			context.closePath();
+			context.fill();
+		},30);
+		
+		
+	</script>
+</div>
+</body>
+</html>
