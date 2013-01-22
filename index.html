@@ -26,6 +26,8 @@
 	<button id="d" >bottom</button><br/>
 	<button id="dl" >bottom left</button><br/>
 	<button id="dr" >bottom right</button><br/>
+	<br/>
+	<button id="loop" >loop</button><br/>
 	<script type="text/javascript">
 	
 		request = {
@@ -95,7 +97,18 @@
 		var buttons = document.getElementsByTagName('button');
 		for(var x = 0; x < buttons.length; x++){
 			buttons[x].onclick = function(){
-				request.send(this.id);
+				if(this.id == 'loop'){
+					request.send('s');
+					
+					var codes = ['u','ur','r','dr','d','dl','l','ul'];
+					
+					for(var y =0; y<codes.length; y++)
+						request.send(codes[y]);
+						
+					request.send('e');
+				}else{
+					request.send(this.id);
+				}
 			}
 		}
 	</script>
