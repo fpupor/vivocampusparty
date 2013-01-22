@@ -14,8 +14,23 @@
 	<script src="phonegap.js"></script>
 	
 		<script type="text/javascript">
+			init ();
+			
 			function log (text){
 				console.log (text);
+			}
+			
+			function init ()
+			{
+				clearDefaults( );
+			}
+			
+			function clearDefaults ()
+			{
+			/*D.onmousemove = viewportcancel;
+				D.onmouseup = viewportcancel;
+				D.onmousedown = viewportcancel;
+				D.oncontextmenu = viewportcancel;*/
 			}
 			
 			request = {
