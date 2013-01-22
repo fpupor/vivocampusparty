@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>Vivo Campus Party</title>
@@ -12,116 +12,78 @@
 	<meta name="apple-mobile-web-app-capable" content="yes" /><!-- Eliminate url and button bars if added to home screen -->
 	
 	<script src="phonegap.js"></script>
-</head>
-<body>
-<div id="root">
 	
-	<button id="e" >enter</button><br/>
-	<button id="s" >start</button><br/>
-	<button id="l" >left</button><br/>
-	<button id="r" >right</button><br/>
-	<button id="u" >top</button><br/>
-	<button id="ul" >top left</button><br/>
-	<button id="ur" >top right</button><br/>
-	<button id="d" >bottom</button><br/>
-	<button id="dl" >bottom left</button><br/>
-	<button id="dr" >bottom right</button><br/>
-	<br/>
-	<button id="loop" >loop</button><br/>
-	<script type="text/javascript">
-	
-		request = {
-			url: 'http://192.168.0.101/',
-			delay: 25,
-			lastcode: null,
-			requestTimer: null,
-		
-			send: function(code){
-				if(code == this.lastcode){
-					return;
-				}
-				
-				clearTimeout(this.requestTimer);
-				
-				var clear = this.lastcode == null;
-				
-				this.lastcode = code;
-				
-				if(code == null){
-					this.httpRequest('c');
-				}else if(clear){
-					this.httpRequest(code);
-				}else{
-					var scope = this;
-					this.requestTimer = setTimeout(function(){
-						scope.httpRequest(code);
-					}, this.delay);
-				}
-			},
-		
-			lastHttpReq: null,
-		
-			httpRequest: function(strURL) {
-				
-				if(this.lastHttpReq){
-					this.lastHttpReq.xmlHttpReq.abort();
-					this.lastHttpReq.xmlHttpReq=null; 
-				}
+		<script type="text/javascript">
+			function log (text){
+				console.log (text);
+			}
 			
-				var thisHttpReq = {};
+			request = {
+				url: 'http://192.168.0.101/',
+				delay: 25,
+				lastcode: null,
+				requestTimer: null,
+			
+				send: function(code){
+					if(code == this.lastcode){
+						return;
+					}
+					
+					clearTimeout(this.requestTimer);
+					
+					var clear = this.lastcode == null;
+					
+					this.lastcode = code;
+					
+					if(code == null){
+						this.httpRequest('c');
+					}else if(clear){
+						this.httpRequest(code);
+					}else{
+						var scope = this;
+						this.requestTimer = setTimeout(function(){
+							scope.httpRequest(code);
+						}, this.delay);
+					}
+				},
+			
+				lastHttpReq: null,
+			
+				httpRequest: function(strURL) {
+					
+					if(this.lastHttpReq){
+						this.lastHttpReq.xmlHttpReq.abort();
+						this.lastHttpReq.xmlHttpReq=null; 
+					}
 				
-				if (window.XMLHttpRequest) {
-					thisHttpReq.xmlHttpReq = new XMLHttpRequest();
-				}
-				else if (window.ActiveXObject) {
-					thisHttpReq.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				
-				thisHttpReq.xmlHttpReq.open('GET', this.url + strURL, true);
-				thisHttpReq.xmlHttpReq.onreadystatechange = function() {
-					if (thisHttpReq.xmlHttpReq.readyState == 1) {
-						if (thisHttpReq.xmlHttpReq) { 
-							thisHttpReq.xmlHttpReq.abort(); 
-							thisHttpReq.xmlHttpReq=null; 
+					var thisHttpReq = {};
+					
+					if (window.XMLHttpRequest) {
+						thisHttpReq.xmlHttpReq = new XMLHttpRequest();
+					}
+					else if (window.ActiveXObject) {
+						thisHttpReq.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					
+					thisHttpReq.xmlHttpReq.open('GET', this.url + strURL, true);
+					thisHttpReq.xmlHttpReq.onreadystatechange = function() {
+						if (thisHttpReq.xmlHttpReq.readyState == 1) {
+							if (thisHttpReq.xmlHttpReq) { 
+								thisHttpReq.xmlHttpReq.abort(); 
+								thisHttpReq.xmlHttpReq=null; 
+							}
 						}
 					}
+					
+					thisHttpReq.xmlHttpReq.send();
+					
+					this.lastHttpReq = thisHttpReq;
 				}
-				
-				thisHttpReq.xmlHttpReq.send();
-				
-				this.lastHttpReq = thisHttpReq;
-			}
-		};
-		
-		
-		var buttons = document.getElementsByTagName('button');
-		for(var x = 0; x < buttons.length; x++){
-			buttons[x].onclick = function(){
-				if(this.id == 'loop'){
-					var timer = 100;
-					
-					setTimeout(function(){
-						request.send('s');
-					},timer);
-					
-					var codes = ['u','ur','r','dr','d','dl','l','ul'];
-					
-					for(var y =0; y<codes.length; y++){
-						timer = timer + 100;
-						setTimeout(function(){
-							request.send(codes[y]);
-						}, timer);
-					}
-					
-					setTimeout(function(){
-						request.send('e');
-					}, timer + 100);
-				}else{
-					request.send(this.id);
-				}
-			}
-		}
-	</script>
-</div>
+			};
+			
+		</script>
+		<script type="text/javascript" src="joystick.js"></script>
+</head>
+<body>
 </body>
 </html>

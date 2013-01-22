@@ -5,12 +5,26 @@ body {
 	margin:0;
 	height:100%;
 	position:relative;
-	background:#eeeeee
 }
 
 *{margin:0;padding:0}
 
-#joyEnter{
+#joystickBase{
+	width:496px;
+	height:495px;
+	background:url(../img/joystick_base.png);
+}
+
+#joystickBall{
+	position:absolute;
+	left:121px;
+	top:107px;
+	width:269px;
+	height:336px;
+	background:url(../img/joystick_ball.png);
+}
+
+/*#joystick{
 	position:absolute;
 	background:transparent url(transparent.gif);
-}
+}*/
