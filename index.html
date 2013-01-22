@@ -98,14 +98,24 @@
 		for(var x = 0; x < buttons.length; x++){
 			buttons[x].onclick = function(){
 				if(this.id == 'loop'){
-					request.send('s');
+					var timer = 100;
+					
+					setTimeout(function(){
+						request.send('s');
+					},timer);
 					
 					var codes = ['u','ur','r','dr','d','dl','l','ul'];
 					
-					for(var y =0; y<codes.length; y++)
-						request.send(codes[y]);
-						
-					request.send('e');
+					for(var y =0; y<codes.length; y++){
+						timer = timer + 100;
+						setTimeout(function(){
+							request.send(codes[y]);
+						}, timer);
+					}
+					
+					setTimeout(function(){
+						request.send('e');
+					}, timer + 100);
 				}else{
 					request.send(this.id);
 				}
