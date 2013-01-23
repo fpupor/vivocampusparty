@@ -51,10 +51,10 @@ var joystick =
 	{
 		init:function()
 		{
-			this.RADIUS_DRAG = 100;
+			this.RADIUS_DRAG = 50;
 			this.LOCK_RADIAN = 45 * Math.PI / 180;
 			this.LOCK_RADIAN_HALF = this.LOCK_RADIAN/2;
-			this.MIN_RADIUS_REQ = 20;
+			this.MIN_RADIUS_REQ = 10;
 			this.currentDirection = "";
 			this.directions = ["r", "dr", "d", "dl", "l", "ul", "u", "ur"];
 			this.x = this.xInit = 61;
