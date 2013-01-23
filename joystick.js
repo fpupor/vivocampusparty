@@ -7,7 +7,7 @@ var joystick =
 	intervalCounter:0,
 	intervalUpdate:0,
 	TIME_COUNTER_START:3,
-	TIME_COUNTER:20,
+	TIME_COUNTER:30,
 	counterStartNum:this.TIME_COUNTER_START,
 	counterNum:this.TIME_COUNTER,
 	

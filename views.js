@@ -16,9 +16,12 @@ var ViewsNavigator = {
 		
 		if (this.currentViewData && this.currentViewData.hide) this.currentViewData.hide();
 		
-		viewData.view.style.display = "block";
-		this.currentViewData = viewData;
-		if (this.currentViewData.show) this.currentViewData.show();
+		setTimeout (function(){
+			viewData.view.style.display = "block";
+			this.currentViewData = viewData;
+			if (this.currentViewData.show) this.currentViewData.show();
+		}, 100);
+		
 	},
 	
 	add:function(id, showCallback, hideCallback)
