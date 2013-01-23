@@ -68,12 +68,14 @@ var joystick =
 			var scope = this;
 			this.div[joystick.eventStart] = function()
 			{
+				console.info("drag");
 				scope.dragOffsetX = joystick.stageX - scope.x;
 				scope.dragOffsetY = joystick.stageY - scope.y;
 				scope.dragging = true;
 			}
 			document.body[joystick.eventEnd] = function()
 			{
+				console.info("drop");
 				scope.dragging = false;
 				request.send (null);
 			}
