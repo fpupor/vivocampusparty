@@ -6,36 +6,35 @@ body {
 }
 
 #root{
-	width:480px;
-	height:800px;
+	width:320px;
+	height:533px;
 	overflow:hidden;
-	background-color:red;
 }
 
 #joystickBase{
 	position:relative;
-	left:57px;
-	top:153px;
-	width:372px;
-	height:371px;
+	left:38px;
+	top:102px;
+	width:248px;
+	height:248px;
 	background:url(../img/joystick_base.png);
 }
 
 #joystickBall{
 	position:absolute;
-	left:91px;
-	top:80px;
-	width:201px;
-	height:252px;
+	left:61px;
+	top:54px;
+	width:134px;
+	height:168px;
 	background:url(../img/joystick_ball.png);
 }
 
 #btCatch{
 	position:absolute;
-	left:28px;
-	top:594px;
-	width:325px;
-	height:110px;
+	left:19px;
+	top:396px;
+	width:217px;
+	height:74px;
 	background:url(../img/bt_pegar.png);
 }
 

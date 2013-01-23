@@ -57,8 +57,8 @@ var joystick =
 			this.MIN_RADIUS_REQ = 20;
 			this.currentDirection = "";
 			this.directions = ["r", "dr", "d", "dl", "l", "ul", "u", "ur"];
-			this.x = this.xInit = 91;
-			this.y = this.yInit = 80;
+			this.x = this.xInit = 61;
+			this.y = this.yInit = 54;
 			this.dragOffsetX = 0;
 			this.dragOffsetY = 0;
 			this.div = document.createElement ("div");
@@ -142,5 +142,5 @@ var joystick =
 window.lastload = window.onload;
 window.onload = function(){
 	if (window.lastload) window.lastload();
-	//joystick.init();
+	joystick.init();
 }
