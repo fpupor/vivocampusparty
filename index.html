@@ -116,6 +116,29 @@
 			document.addEventListener ("deviceready", function(){
 				init ();
 				joystick.init();
+				
+				window.addEventListener("batterycritical", function(info) {
+					// Handle the battery critical event
+					alert("Battery Level Critical " + info.level + "%\nRecharge Soon!"); 
+				}, false);
+				
+				var cancelevent = function(){
+					return false;
+				}
+				
+				document.addEventListener("menubutton", cancelevent, false);
+				document.addEventListener("startcallbutton", cancelevent, false);
+				document.addEventListener("searchbutton", cancelevent, false);
+				document.addEventListener("endcallbutton", cancelevent, false);
+
+				document.addEventListener("pause", function(){
+					request.send('pause');
+				}, false);
+
+				document.addEventListener("resume", function(){
+					request.send('resume');
+				}, false);
+				
 			}, false);
 			
 			
