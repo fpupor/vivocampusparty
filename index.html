@@ -8,7 +8,8 @@
 	<link rel="stylesheet" href="css/layout.css" media="all" type="text/css">
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, height=device-height, width=device-width, target-densityDpi=device-dpi" / > 
 	
-	<script src="phonegap.js"></script>
+	<!-- <script src="phonegap.js"></script> -->
+	<script type="text/javascript" src="views.js"></script>
 	<script type="text/javascript" src="joystick.js"></script>
 		<script type="text/javascript">
 			
@@ -20,6 +21,16 @@
 			function init ()
 			{
 				//clearDefaults( );
+				joystick.init();
+				
+				ViewsNavigator.add ("homestart");
+				ViewsNavigator.add ("joystick", joystick.restart);
+				ViewsNavigator.add ("gameover");
+				ViewsNavigator.init ();
+				
+				ViewsNavigator.go ("homestart");
+				
+				request.send ("i");
 			}
 			
 			
@@ -110,10 +121,8 @@
 				}
 			};
 			
-			
 			document.addEventListener ("deviceready", function(){
 				init ();
-				joystick.init();
 				
 				window.addEventListener("batterycritical", function(info) {
 					// Handle the battery critical event
@@ -143,8 +152,17 @@
 		</script>
 		
 </head>
-<body>
+<body onload="init()">
 		<div id="root">
+			<div id="homestart" class="view">
+				<div class="claw"></div>
+				<div id="btStart" onclick="ViewsNavigator.go('joystick');"></div>
+			</div>
+			<div id="joystick" class="view"></div>
+			<div id="gameover" class="view">
+				<div class="claw"></div>
+				<div id="waitMachine" onclick="ViewsNavigator.go('homestart');"></div>
+			</div>
 		</div>
 </body>
 </html>

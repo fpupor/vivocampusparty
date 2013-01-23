@@ -7,25 +7,25 @@ var joystick =
 	eventStart:"ontouchstart",
 	eventMove:"ontouchmove",
 	eventEnd:"ontouchend",
-	eventClick:"ontouchstart",
+	eventClick:"onclick",
 	
 	init:function()
 	{
-		console.info("init");
-		this.rootDiv = document.getElementById ("root");
+		this.joystickDiv = document.getElementById ("joystick");
 		this.base = document.createElement ("div");
 		this.base.id = "joystickBase";
-		this.rootDiv.appendChild (this.base);
+		this.joystickDiv.appendChild (this.base);
 		
 		this.ball.init();
 		this.base.appendChild (this.ball.div);
 		
 		this.btCatch = document.createElement ("div");
 		this.btCatch.id = "btCatch";
-		this.rootDiv.appendChild (this.btCatch);
+		this.joystickDiv.appendChild (this.btCatch);
 		
 		this.btCatch[joystick.eventClick] = function (e){
 			request.send ("e");
+			ViewsNavigator.go ("gameover");
 		}
 		
 		document.body[joystick.eventMove] = function(e){
@@ -69,7 +69,6 @@ var joystick =
 				joystick.stageX = e.touches[0].pageX;
 				joystick.stageY = e.touches[0].pageY;
 			
-				console.info("drag");
 				scope.dragOffsetX = joystick.stageX - scope.x;
 				scope.dragOffsetY = joystick.stageY - scope.y;
 				scope.dragging = true;
@@ -77,7 +76,6 @@ var joystick =
 			document.body[joystick.eventEnd] = this.div[joystick.eventEnd] = function(e)
 			{
 				if (!scope.dragging) return;
-				console.info("drop");
 				scope.dragging = false;
 				request.send (null);
 			}

@@ -5,10 +5,26 @@ body {
 	position:relative;
 }
 
+
+.view{
+	width:480px;
+	height:800px;
+	position:absolute;
+}
+
+.claw{
+	position:absolute;
+	width:480px;
+	height:639px;
+	top:115px;
+	background:url(../img/claw.png);
+}
+
 #root{
 	width:480px;
 	height:800px;
 	overflow:hidden;
+	background:url(../img/bg.jpg);
 }
 
 #joystickBase{
@@ -36,6 +52,24 @@ body {
 	width:325px;
 	height:110px;
 	background:url(../img/bt_pegar.png);
+}
+
+#btStart{
+	position:absolute;
+	left:144px;
+	top:247px;
+	width:321px;
+	height:191px;
+	background:url(../img/bt_start.png);
+}
+
+#waitMachine{
+	position:absolute;
+	left:146px;
+	top:280px;
+	width:306px;
+	height:151px;
+	background:url(../img/wait_machine.png);
 }
 
 /*#joystick{
