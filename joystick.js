@@ -4,14 +4,14 @@ var joystick =
 	stageX:0,
 	stageY:0,
 	
-	/*eventStart:"ontouchstart",
+	eventStart:"ontouchstart",
 	eventMove:"ontouchmove",
 	eventEnd:"ontouchend",
-	eventClick:"onclick",*/
-	eventStart:"onmousedown",
+	eventClick:"ontouchstart",
+	/*eventStart:"onmousedown",
 	eventMove:"onmousemove",
 	eventEnd:"onmouseup",
-	eventClick:"onclick",
+	eventClick:"onclick",*/
 	
 	init:function()
 	{
