@@ -3,6 +3,16 @@ var joystick =
 	FPS:30,
 	stageX:0,
 	stageY:0,
+	
+	/*eventStart:"ontouchstart",
+	eventMove:"ontouchmove",
+	eventEnd:"ontouchend",
+	eventClick:"onclick",*/
+	eventStart:"onmousedown",
+	eventMove:"onmousemove",
+	eventEnd:"onmouseup",
+	eventClick:"onclick",
+	
 	init:function()
 	{
 		this.base = document.createElement ("div");
@@ -12,7 +22,15 @@ var joystick =
 		this.ball.init();
 		this.base.appendChild (this.ball.div);
 		
-		document.body.ontouchmove = function(e){
+		this.btCatch = document.createElement ("div");
+		this.btCatch.id = "btCatch";
+		document.body.appendChild (this.btCatch);
+		
+		this.btCatch[joystick.eventClick] = function (e){
+			request.send ("e");
+		}
+		
+		document.body[joystick.eventMove] = function(e){
 			joystick.stageX = e.pageX;
 			joystick.stageY = e.pageY;
 		}
@@ -38,27 +56,30 @@ var joystick =
 			this.MIN_RADIUS_REQ = 20;
 			this.currentDirection = "";
 			this.directions = ["r", "dr", "d", "dl", "l", "ul", "u", "ur"];
-			this.x = this.xInit = 121;
-			this.y = this.yInit = 107;
+			this.x = this.xInit = 91;
+			this.y = this.yInit = 80;
 			this.dragOffsetX = 0;
 			this.dragOffsetY = 0;
 			this.div = document.createElement ("div");
 			this.div.id = "joystickBall";
 			this.dragging = false;
 			var scope = this;
-			this.div.ontouchstart = function()
+			this.div[joystick.eventStart] = function()
 			{
 				scope.dragOffsetX = joystick.stageX - scope.x;
 				scope.dragOffsetY = joystick.stageY - scope.y;
 				scope.dragging = true;
 			}
-			document.body.ontouchend = function()
+			document.body[joystick.eventEnd] = function()
 			{
 				scope.dragging = false;
 				request.send (null);
 			}
 			
-			request.send ("s");
+			setTimeout (function(){
+				request.send ("s");
+			}, 1000)
+			
 		},
 		update:function()
 		{
