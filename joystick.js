@@ -81,9 +81,6 @@ var joystick =
 			document.body[joystick.eventEnd] = this.div[joystick.eventEnd] = function(e)
 			{
 				if (!scope.dragging) return;
-				e.preventDefault(); e.stopPropagation();
-				joystick.stageX = e.touches[0].pageX;
-				joystick.stageY = e.touches[0].pageY;
 				console.info("drop");
 				scope.dragging = false;
 				request.send (null);
