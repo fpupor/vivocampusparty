@@ -4,14 +4,14 @@ var joystick =
 	stageX:0,
 	stageY:0,
 	
-	eventStart:"ontouchstart",
+	/*eventStart:"ontouchstart",
 	eventMove:"ontouchmove",
 	eventEnd:"ontouchend",
-	eventClick:"onclick",
-	/*eventStart:"onmousedown",
+	eventClick:"onclick",*/
+	eventStart:"onmousedown",
 	eventMove:"onmousemove",
 	eventEnd:"onmouseup",
-	eventClick:"onclick",*/
+	eventClick:"onclick",
 	
 	init:function()
 	{
@@ -51,14 +51,14 @@ var joystick =
 	{
 		init:function()
 		{
-			this.RADIUS_DRAG = 50;
+			this.RADIUS_DRAG = 75;
 			this.LOCK_RADIAN = 45 * Math.PI / 180;
 			this.LOCK_RADIAN_HALF = this.LOCK_RADIAN/2;
-			this.MIN_RADIUS_REQ = 10;
+			this.MIN_RADIUS_REQ = 15;
 			this.currentDirection = "";
 			this.directions = ["r", "dr", "d", "dl", "l", "ul", "u", "ur"];
-			this.x = this.xInit = 61;
-			this.y = this.yInit = 54;
+			this.x = this.xInit = 91;
+			this.y = this.yInit = 80;
 			this.dragOffsetX = 0;
 			this.dragOffsetY = 0;
 			this.div = document.createElement ("div");
