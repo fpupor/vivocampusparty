@@ -4,11 +4,6 @@ var joystick =
 	stageX:0,
 	stageY:0,
 	
-	eventStart:"ontouchstart",
-	eventMove:"ontouchmove",
-	eventEnd:"ontouchend",
-	eventClick:"onclick",
-	
 	init:function()
 	{
 		this.joystickDiv = document.getElementById ("joystick");
@@ -23,21 +18,33 @@ var joystick =
 		this.btCatch.id = "btCatch";
 		this.joystickDiv.appendChild (this.btCatch);
 		
-		this.btCatch[joystick.eventClick] = function (e){
+		this.btCatch[eventClick] = function (e){
 			request.send ("e");
 			ViewsNavigator.go ("gameover");
 		}
 		
-		document.body[joystick.eventMove] = function(e){
+		document.body[eventMove] = function(e){
 			e.preventDefault(); e.stopPropagation();
-			joystick.stageX = e.touches[0].pageX;
-			joystick.stageY = e.touches[0].pageY;
+			joystick.stageX = e.touches ? e.touches[0].pageX : e.pageX;
+			joystick.stageY = e.touches ? e.touches[0].pageY : e.pageY;
 		}
 		
+		
+	},
+	
+	show:function()
+	{
 		var scope = this;
-		setInterval (function(){
+		clearInterval (this.intervalUpdate);
+		this.intervalUpdate = setInterval (function(){
 			scope.update();
 		}, 1000/this.FPS);
+	},
+	
+	hide:function()
+	{
+		clearInterval (this.intervalUpdate);
+		//log ("joystick hide: " + this.ball);
 	},
 	
 	update:function()
@@ -63,17 +70,17 @@ var joystick =
 			this.div.id = "joystickBall";
 			this.dragging = false;
 			var scope = this;
-			this.div[joystick.eventStart] = function(e)
+			this.div[eventStart] = function(e)
 			{
-				e.preventDefault(); e.stopPropagation();
-				joystick.stageX = e.touches[0].pageX;
-				joystick.stageY = e.touches[0].pageY;
+				e.preventDefault(); e.stopPropagation();				
+				joystick.stageX = e.touches ? e.touches[0].pageX : e.pageX;
+				joystick.stageY = e.touches ? e.touches[0].pageY : e.pageY;
 			
 				scope.dragOffsetX = joystick.stageX - scope.x;
 				scope.dragOffsetY = joystick.stageY - scope.y;
 				scope.dragging = true;
 			}
-			document.body[joystick.eventEnd] = this.div[joystick.eventEnd] = function(e)
+			document.body[eventEnd] = this.div[eventEnd] = function(e)
 			{
 				if (!scope.dragging) return;
 				scope.dragging = false;
@@ -82,7 +89,7 @@ var joystick =
 			
 			setTimeout (function(){
 				request.send ("s");
-			}, 2000)
+			}, 3000)
 			
 		},
 		update:function()

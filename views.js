@@ -1,7 +1,7 @@
 var ViewsNavigator = {
 	
 	views:{},
-	currentView:null,
+	currentViewData:null,
 	
 	init:function()
 	{
@@ -10,22 +10,28 @@ var ViewsNavigator = {
 	
 	go:function(id)
 	{
-		if (this.views[id] == null) return;
+		var viewData = this.views[id];
+		if (viewData == null) return;
 		this.hideViews ();
-		this.views[id].style.display = "block";
+		
+		if (this.currentViewData && this.currentViewData.hide) this.currentViewData.hide();
+		
+		viewData.view.style.display = "block";
+		this.currentViewData = viewData;
+		if (this.currentViewData.show) this.currentViewData.show();
 	},
 	
-	add:function(id)
+	add:function(id, showCallback, hideCallback)
 	{
 		var view = document.getElementById(id);
-		this.views[id] = view;
+		this.views[id] = {view:view, show:showCallback, hide:hideCallback};
 	},
 	
 	hideViews:function ()
 	{
 		for (var i in this.views)
 		{
-			this.views[i].style.display = "none";
+			this.views[i].view.style.display = "none";
 		}
 	}
 }

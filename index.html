@@ -13,7 +13,17 @@
 	<script type="text/javascript" src="joystick.js"></script>
 		<script type="text/javascript">
 			
+			/*var eventStart = "ontouchstart";
+			var eventMove = "ontouchmove";
+			var eventEnd = "ontouchend";
+			var eventClick = "ontouchstart";*/
+			var eventStart = "onmousedown";
+			var eventMove = "onmousemove";
+			var eventEnd = "onmouseup";
+			var eventClick = "onclick";
 			
+			var TIME_UNBLOCK_RESTART = 10;
+	
 			function log (text){
 				console.log (text);
 			}
@@ -24,8 +34,8 @@
 				joystick.init();
 				
 				ViewsNavigator.add ("homestart");
-				ViewsNavigator.add ("joystick", joystick.restart);
-				ViewsNavigator.add ("gameover");
+				ViewsNavigator.add ("joystick", function(){joystick.show();}, function(){joystick.hide();});
+				ViewsNavigator.add ("gameover", function(){initGameOver();});
 				ViewsNavigator.init ();
 				
 				ViewsNavigator.go ("homestart");
@@ -33,7 +43,17 @@
 				request.send ("i");
 			}
 			
-			
+			function initGameOver()
+			{
+				var waitMachineDiv = document.getElementById ("waitMachine");
+				waitMachineDiv[eventClick] = null;
+				setTimeout (function(){
+					waitMachineDiv[eventClick] = function (){
+						ViewsNavigator.go('homestart');
+					}
+				}, TIME_UNBLOCK_RESTART * 1000);
+				
+			}
 			
 			function clearDefaults ()
 			{
@@ -161,7 +181,7 @@
 			<div id="joystick" class="view"></div>
 			<div id="gameover" class="view">
 				<div class="claw"></div>
-				<div id="waitMachine" onclick="ViewsNavigator.go('homestart');"></div>
+				<div id="waitMachine"></div>
 			</div>
 		</div>
 </body>
