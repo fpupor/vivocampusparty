@@ -70,6 +70,9 @@ var joystick =
 			this.div[joystick.eventStart] = function(e)
 			{
 				e.preventDefault(); e.stopPropagation();
+				joystick.stageX = e.touches[0].pageX;
+				joystick.stageY = e.touches[0].pageY;
+			
 				console.info("drag");
 				scope.dragOffsetX = joystick.stageX - scope.x;
 				scope.dragOffsetY = joystick.stageY - scope.y;
@@ -78,6 +81,8 @@ var joystick =
 			document.body[joystick.eventEnd] = function(e)
 			{
 				e.preventDefault(); e.stopPropagation();
+				joystick.stageX = e.touches[0].pageX;
+				joystick.stageY = e.touches[0].pageY;
 				console.info("drop");
 				scope.dragging = false;
 				request.send (null);
