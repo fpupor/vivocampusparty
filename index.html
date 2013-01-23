@@ -9,7 +9,7 @@
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, height=device-height, width=device-width, target-densityDpi=device-dpi" / > 
 	
 	<script src="phonegap.js"></script>
-	
+	<script type="text/javascript" src="joystick.js"></script>
 		<script type="text/javascript">
 			
 			
@@ -112,10 +112,15 @@
 				}
 			};
 			
-			init ();
+			
+			document.addEventListener ("deviceready", function(){
+				init ();
+				joystick.init();
+			}, false);
+			
 			
 		</script>
-		<script type="text/javascript" src="joystick.js"></script>
+		
 </head>
 <body>
 		<div id="root">

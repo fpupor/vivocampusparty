@@ -33,8 +33,9 @@ var joystick =
 		}
 		
 		document.body[joystick.eventMove] = function(e){
-			joystick.stageX = e.pageX;
-			joystick.stageY = e.pageY;
+			e.preventDefault(); e.stopPropagation();
+			joystick.stageX = e.touches[0].pageX;
+			joystick.stageY = e.touches[0].pageY;
 		}
 		
 		var scope = this;
@@ -66,15 +67,17 @@ var joystick =
 			this.div.id = "joystickBall";
 			this.dragging = false;
 			var scope = this;
-			this.div[joystick.eventStart] = function()
+			this.div[joystick.eventStart] = function(e)
 			{
+				e.preventDefault(); e.stopPropagation();
 				console.info("drag");
 				scope.dragOffsetX = joystick.stageX - scope.x;
 				scope.dragOffsetY = joystick.stageY - scope.y;
 				scope.dragging = true;
 			}
-			document.body[joystick.eventEnd] = function()
+			document.body[joystick.eventEnd] = function(e)
 			{
+				e.preventDefault(); e.stopPropagation();
 				console.info("drop");
 				scope.dragging = false;
 				request.send (null);
@@ -140,10 +143,4 @@ var joystick =
 			this.div.style.msTransform = transform;
 		}
 	}
-}
-
-window.lastload = window.onload;
-window.onload = function(){
-	if (window.lastload) window.lastload();
-	joystick.init();
 }
