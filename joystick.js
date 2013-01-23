@@ -4,17 +4,18 @@ var joystick =
 	stageX:0,
 	stageY:0,
 	
-	/*eventStart:"ontouchstart",
+	eventStart:"ontouchstart",
 	eventMove:"ontouchmove",
 	eventEnd:"ontouchend",
-	eventClick:"ontouchstart",*/
-	eventStart:"onmousedown",
+	eventClick:"ontouchstart",
+	/*eventStart:"onmousedown",
 	eventMove:"onmousemove",
 	eventEnd:"onmouseup",
-	eventClick:"onclick",
+	eventClick:"onclick",*/
 	
 	init:function()
 	{
+		console.info("init");
 		this.rootDiv = document.getElementById ("root");
 		this.base = document.createElement ("div");
 		this.base.id = "joystickBase";
