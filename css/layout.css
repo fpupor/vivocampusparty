@@ -1,13 +1,15 @@
-html {
-	height:100%;
-}
+*{margin:0;padding:0}
+
 body {
 	margin:0;
-	height:100%;
 	position:relative;
 }
 
-*{margin:0;padding:0}
+#root{
+	width:480px;
+	height:800px;
+	overflow:hidden;
+}
 
 #joystickBase{
 	position:relative;

@@ -4,27 +4,28 @@ var joystick =
 	stageX:0,
 	stageY:0,
 	
-	/*eventStart:"ontouchstart",
+	eventStart:"ontouchstart",
 	eventMove:"ontouchmove",
 	eventEnd:"ontouchend",
-	eventClick:"onclick",*/
-	eventStart:"onmousedown",
+	eventClick:"onclick",
+	/*eventStart:"onmousedown",
 	eventMove:"onmousemove",
 	eventEnd:"onmouseup",
-	eventClick:"onclick",
+	eventClick:"onclick",*/
 	
 	init:function()
 	{
+		this.rootDiv = document.getElementById ("root");
 		this.base = document.createElement ("div");
 		this.base.id = "joystickBase";
-		document.body.appendChild (this.base);
+		this.rootDiv.appendChild (this.base);
 		
 		this.ball.init();
 		this.base.appendChild (this.ball.div);
 		
 		this.btCatch = document.createElement ("div");
 		this.btCatch.id = "btCatch";
-		document.body.appendChild (this.btCatch);
+		this.rootDiv.appendChild (this.btCatch);
 		
 		this.btCatch[joystick.eventClick] = function (e){
 			request.send ("e");

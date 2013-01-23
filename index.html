@@ -5,7 +5,7 @@
 	<title>Vivo Campus Party</title>
 	<meta name="description" content="Vivo Campus Party">
 	<meta name="author" content="Wunderman">
-	<link rel="stylesheet" href="css/reset.css" media="all" type="text/css">
+	<!-- <link rel="stylesheet" href="css/reset.css" media="all" type="text/css"> -->
 	<link rel="stylesheet" href="css/layout.css" media="all" type="text/css">
 	<meta name="viewport" content="width=480, height=800, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
 	
@@ -22,16 +22,30 @@
 			{
 				clearDefaults( );
 				
-				alert ("w4: " + window.innerWidth + "h4:" + window.innerHeight);
-				//alert ("w: " + window.innerWidth + "h:" + window.innerHeight);
+				alert ("tt5: " + window.innerWidth + "tt5:" + window.innerHeight);
 			}
 			
 			function clearDefaults ()
 			{
-			/*D.onmousemove = viewportcancel;
-				D.onmouseup = viewportcancel;
-				D.onmousedown = viewportcancel;
-				D.oncontextmenu = viewportcancel;*/
+				var D = document;
+				var viewportcancel = function(e){ e.preventDefault(); e.stopPropagation();};
+		
+				try{
+					D.addEventListener('mousemove', viewportcancel, false);
+					D.addEventListener('mouseup', viewportcancel, false);
+					D.addEventListener('mousedown', viewportcancel, false);
+					D.addEventListener('contextmenu', viewportcancel, false);
+				}catch(e){
+					D.onmousemove = viewportcancel;
+					D.onmouseup = viewportcancel;
+					D.onmousedown = viewportcancel;
+					D.oncontextmenu = viewportcancel;
+				}
+				
+				var els = D.getElementsByTagName('*');
+				
+				for(var x = 0; x < els.length; x++)
+						els[x].onmouseup = els[x].onmousedown = els[x].oncontextmenu = viewportcancel;
 			}
 			
 			request = {
@@ -101,5 +115,8 @@
 		<script type="text/javascript" src="joystick.js"></script>
 </head>
 <body>
+		<div id="root">
+			
+		</div>
 </body>
 </html>
