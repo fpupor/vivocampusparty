@@ -13,19 +13,19 @@
 	<script type="text/javascript" src="joystick.js"></script>
 		<script type="text/javascript">
 			
-			/*var eventStart = "ontouchstart";
+			var eventStart = "ontouchstart";
 			var eventMove = "ontouchmove";
 			var eventEnd = "ontouchend";
-			var eventClick = "ontouchstart";*/
-			var eventStart = "onmousedown";
+			var eventClick = "ontouchstart";
+			/*var eventStart = "onmousedown";
 			var eventMove = "onmousemove";
 			var eventEnd = "onmouseup";
-			var eventClick = "onclick";
+			var eventClick = "onclick";*/
 			
 			var TIME_UNBLOCK_RESTART = 10;
 	
 			function log (text){
-				console.log (text);
+				//console.log (text);
 			}
 			
 			function init ()
@@ -76,6 +76,17 @@
 				
 				//for(var x = 0; x < els.length; x++)
 						//els[x].onmouseup = els[x].onmousedown = els[x].oncontextmenu = viewportcancel;
+			}
+			
+			function digitalFormat (num, totalDigits)
+			{
+				var strNum = num.toString ();
+				while (totalDigits - strNum.length > 0)
+				{
+					strNum = "0" + strNum;
+				}
+				
+				return strNum;
 			}
 			
 			request = {
@@ -172,7 +183,7 @@
 		</script>
 		
 </head>
-<body onload="init()">
+<body>
 		<div id="root">
 			<div id="homestart" class="view">
 				<div class="claw"></div>

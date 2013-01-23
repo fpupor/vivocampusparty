@@ -3,9 +3,17 @@ var joystick =
 	FPS:30,
 	stageX:0,
 	stageY:0,
+	intervalStart:0,
+	intervalCounter:0,
+	intervalUpdate:0,
+	TIME_COUNTER_START:3,
+	TIME_COUNTER:20,
+	counterStartNum:this.TIME_COUNTER_START,
+	counterNum:this.TIME_COUNTER,
 	
 	init:function()
 	{
+		var scope = this;
 		this.joystickDiv = document.getElementById ("joystick");
 		this.base = document.createElement ("div");
 		this.base.id = "joystickBase";
@@ -18,9 +26,28 @@ var joystick =
 		this.btCatch.id = "btCatch";
 		this.joystickDiv.appendChild (this.btCatch);
 		
+		this.textCounterStart = document.createElement ("div");
+		this.textCounterStart.id = "textCounterStartGame"
+		this.joystickDiv.appendChild (this.textCounterStart);
+		
+		this.counterStart = document.createElement ("div");
+		this.counterStart.className = "counterStyle";
+		this.counterStart.id = "counterStartGame";
+		this.textCounterStart.appendChild (this.counterStart);
+		
+		this.textCounter = document.createElement ("div");
+		this.textCounter.id = "textCounterGame";
+		this.joystickDiv.appendChild (this.textCounter);
+		
+		this.counter = document.createElement ("div");
+		this.counter.className = "counterStyle";
+		this.counter.id = "counterGame";
+		this.joystickDiv.appendChild (this.counter);
+		
+		
+		
 		this.btCatch[eventClick] = function (e){
-			request.send ("e");
-			ViewsNavigator.go ("gameover");
+			scope.endGame();
 		}
 		
 		document.body[eventMove] = function(e){
@@ -32,18 +59,67 @@ var joystick =
 		
 	},
 	
-	show:function()
+	startGame:function()
 	{
+		log ("startGame");
+		request.send ("s");
+		
+		this.textCounterStart.style.display = "none";
+		
 		var scope = this;
 		clearInterval (this.intervalUpdate);
 		this.intervalUpdate = setInterval (function(){
 			scope.update();
 		}, 1000/this.FPS);
+		
+		clearInterval (this.intervalCounter);
+		this.intervalCounter = setInterval (function(){
+			scope.counterNum--;
+			scope.counter.innerHTML = digitalFormat(scope.counterNum, 2);
+			if (scope.counterNum == 0)
+			{
+				clearInterval (scope.intervalCounter);
+				scope.endGame();
+			}
+		}, 1000)
+	},
+	
+	endGame:function()
+	{
+		log ("endGame");
+		request.send ("e");
+		ViewsNavigator.go ("gameover");
+	},
+	
+	show:function()
+	{
+		this.counterStartNum = this.TIME_COUNTER_START;
+		this.counterNum = this.TIME_COUNTER;
+		this.counter.innerHTML = digitalFormat (this.TIME_COUNTER, 2);
+		this.counterStart.innerHTML = digitalFormat (this.TIME_COUNTER_START, 2);
+		
+		this.textCounterStart.style.display = "block";
+		
+		this.ball.reset();
+		
+		var scope = this;
+		clearInterval (this.intervalStart);
+		this.intervalStart = setInterval (function(){
+			scope.counterStartNum--;
+			scope.counterStart.innerHTML = digitalFormat(scope.counterStartNum, 2);
+			if (scope.counterStartNum == 0)
+			{
+				clearInterval (scope.intervalStart);
+				scope.startGame();
+			}
+		}, 1000)
 	},
 	
 	hide:function()
 	{
 		clearInterval (this.intervalUpdate);
+		clearInterval (this.intervalCounter);
+		clearInterval (this.intervalStart);
 		//log ("joystick hide: " + this.ball);
 	},
 	
@@ -66,9 +142,10 @@ var joystick =
 			this.y = this.yInit = 80;
 			this.dragOffsetX = 0;
 			this.dragOffsetY = 0;
+			this.dragging = false;
 			this.div = document.createElement ("div");
 			this.div.id = "joystickBall";
-			this.dragging = false;
+			
 			var scope = this;
 			this.div[eventStart] = function(e)
 			{
@@ -87,11 +164,14 @@ var joystick =
 				request.send (null);
 			}
 			
-			setTimeout (function(){
-				request.send ("s");
-			}, 3000)
-			
 		},
+		reset:function()
+		{
+			this.x = this.xInit;
+			this.y = this.yInit;
+			this.updateTransform();
+		},
+		
 		update:function()
 		{
 			var xEnd;

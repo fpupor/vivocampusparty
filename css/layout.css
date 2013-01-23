@@ -54,6 +54,49 @@ body {
 	background:url(../img/bt_pegar.png);
 }
 
+#textCounterStartGame{
+	position:absolute;
+	left:0px;
+	top:0px;
+	z-index:2;
+	width:480px;
+	height:800px;
+	background:url(../img/game_starts_in.png);
+}
+
+
+#textCounterGame{
+	position:absolute;
+	left:367px;
+	top:597px;
+	width:79px;
+	height:36px;
+	background:url(../img/text_game_counter.png);
+}
+
+.counterStyle{
+	position:absolute;
+	font-family:"Arial Bold", Arial, sans-serif;
+	color:#8F3185;
+	text-align:center;
+}
+
+#counterStartGame{
+	left:95px;
+	top:280px;
+	width:280px;
+	height:215px;
+	font-size:280px;
+}
+
+#counterGame{
+	left:367px;
+	top:623px;
+	width:79px;
+	height:130px;
+	font-size:80px;
+}
+
 #btStart{
 	position:absolute;
 	left:144px;
