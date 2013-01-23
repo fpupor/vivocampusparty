@@ -20,8 +20,6 @@
 			function init ()
 			{
 				//clearDefaults( );
-				
-				alert ("w1: " + window.innerWidth + "h1:" + window.innerHeight);
 			}
 			
 			
@@ -132,11 +130,11 @@
 				document.addEventListener("endcallbutton", cancelevent, false);
 
 				document.addEventListener("pause", function(){
-					request.send('pause');
+					request.send('p');
 				}, false);
 
 				document.addEventListener("resume", function(){
-					request.send('resume');
+					request.send('y');
 				}, false);
 				
 			}, false);
