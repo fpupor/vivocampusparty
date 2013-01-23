@@ -142,5 +142,5 @@ var joystick =
 window.lastload = window.onload;
 window.onload = function(){
 	if (window.lastload) window.lastload();
-	joystick.init();
+	//joystick.init();
 }
