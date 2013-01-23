@@ -8,10 +8,6 @@ var joystick =
 	eventMove:"ontouchmove",
 	eventEnd:"ontouchend",
 	eventClick:"ontouchstart",
-	/*eventStart:"onmousedown",
-	eventMove:"onmousemove",
-	eventEnd:"onmouseup",
-	eventClick:"onclick",*/
 	
 	init:function()
 	{
@@ -88,7 +84,7 @@ var joystick =
 			
 			setTimeout (function(){
 				request.send ("s");
-			}, 1000)
+			}, 2000)
 			
 		},
 		update:function()
@@ -129,7 +125,7 @@ var joystick =
 			}
 			else
 			{
-				request.send (null);
+				//request.send (null);
 			}
 			
 			this.updateTransform();
