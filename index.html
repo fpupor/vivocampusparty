@@ -27,7 +27,11 @@
 			var intervalRestart;
 			var counterRestart;
 			var waitMachineDiv;
-	
+			var gameStatus;
+			// 0 pronto para jogar
+			// 1 jogando
+			// 2 fim do jogo
+			
 			function log (text){
 				//console.log (text);
 			}
@@ -39,12 +43,26 @@
 				initGameOver();
 				joystick.init();
 				
-				ViewsNavigator.add ("homestart");
-				ViewsNavigator.add ("joystick", function(){joystick.show();}, function(){joystick.hide();});
-				ViewsNavigator.add ("gameover", function(){showGameOver();});
+				
+				
+				ViewsNavigator.add ("homestart", function(){
+					gameStatus = 0;
+				});
+				ViewsNavigator.add ("joystick", function(){
+					gameStatus = 1;
+					joystick.show();
+				}, function(){
+					joystick.hide();
+				});
+				
+				ViewsNavigator.add ("gameover", function(){
+					gameStatus = 2;
+					showGameOver();
+				});
+				
 				ViewsNavigator.init ();
 				
-				ViewsNavigator.go ("gameover");
+				ViewsNavigator.go ("homestart");
 				
 				request.send ("i");
 			}
@@ -86,7 +104,8 @@
 			function enableRestart ()
 			{
 				waitMachineDiv[eventClick] = function (){
-					ViewsNavigator.go('homestart');
+					if(hasStatus(2))
+						ViewsNavigator.go('homestart');
 				}
 			}
 			
@@ -217,7 +236,21 @@
 				
 			}, false);
 			
+			function hasStatus(status, ignoreError){
+				if(gameStatus == status){
+					return true;
+				}else{
+					if(ignoreError)
+						appError();
+						
+					return false;
+				}
+			}
 			
+			function appError(){
+				request.send('c');
+				navigator.app.exitApp();
+			}
 		</script>
 		
 </head>
@@ -225,7 +258,7 @@
 		<div id="root">
 			<div id="homestart" class="view">
 				<div class="claw"></div>
-				<div id="btStart" onclick="ViewsNavigator.go('joystick');"></div>
+				<div id="btStart" onclick="if(hasStatus(0)) ViewsNavigator.go('joystick');"></div>
 			</div>
 			<div id="joystick" class="view"></div>
 			<div id="gameover" class="view">
