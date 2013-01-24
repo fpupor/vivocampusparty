@@ -23,6 +23,10 @@
 			var eventClick = "onclick";*/
 			
 			var TIME_UNBLOCK_RESTART = 10;
+			var counterRestartNum=TIME_UNBLOCK_RESTART;
+			var intervalRestart;
+			var counterRestart;
+			var waitMachineDiv;
 	
 			function log (text){
 				//console.log (text);
@@ -30,29 +34,60 @@
 			
 			function init ()
 			{
+				
 				//clearDefaults( );
+				initGameOver();
 				joystick.init();
 				
 				ViewsNavigator.add ("homestart");
 				ViewsNavigator.add ("joystick", function(){joystick.show();}, function(){joystick.hide();});
-				ViewsNavigator.add ("gameover", function(){initGameOver();});
+				ViewsNavigator.add ("gameover", function(){showGameOver();});
 				ViewsNavigator.init ();
 				
-				ViewsNavigator.go ("homestart");
+				ViewsNavigator.go ("gameover");
 				
 				request.send ("i");
 			}
 			
 			function initGameOver()
 			{
-				var waitMachineDiv = document.getElementById ("waitMachine");
-				waitMachineDiv[eventClick] = null;
-				setTimeout (function(){
-					waitMachineDiv[eventClick] = function (){
-						ViewsNavigator.go('homestart');
-					}
-				}, TIME_UNBLOCK_RESTART * 1000);
+				var divGameOver = document.getElementById ("gameover");
 				
+				counterRestart = document.createElement ("div");
+				counterRestart.className = "counterStyle";
+				counterRestart.id = "counterRestart";
+				divGameOver.appendChild (counterRestart);
+			}
+			
+			function showGameOver()
+			{
+				var scope = this;
+				waitMachineDiv = document.getElementById ("waitMachine");
+				waitMachineDiv[eventClick] = null;
+				
+				counterRestartNum = TIME_UNBLOCK_RESTART;
+				
+				scope.counterRestart.innerHTML = digitalFormat(TIME_UNBLOCK_RESTART, 2);
+				
+				clearInterval (intervalRestart);
+				
+				intervalRestart = setInterval (function(){
+					scope.counterRestartNum--;
+					scope.counterRestart.innerHTML = digitalFormat(scope.counterRestartNum, 2);
+					if (scope.counterRestartNum == 0)
+					{
+						clearInterval (scope.intervalRestart);
+						scope.enableRestart();
+					}
+				}, 1000);
+				
+			}
+			
+			function enableRestart ()
+			{
+				waitMachineDiv[eventClick] = function (){
+					ViewsNavigator.go('homestart');
+				}
 			}
 			
 			function clearDefaults ()
@@ -154,6 +189,7 @@
 				}
 			};
 			
+			//window.addEventListener ("load", function(){
 			document.addEventListener ("deviceready", function(){
 				init ();
 				

@@ -97,6 +97,14 @@ body {
 	font-size:80px;
 }
 
+#counterRestart{
+	left:380px;
+	top:723px;
+	width:79px;
+	height:80px;
+	font-size:50px;
+}
+
 #btStart{
 	position:absolute;
 	left:144px;
