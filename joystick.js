@@ -87,6 +87,9 @@ var joystick =
 	endGame:function()
 	{
 		log ("endGame");
+		clearInterval (this.intervalUpdate);
+		clearInterval (this.intervalCounter);
+		clearInterval (this.intervalStart);
 		request.send ("e");
 		ViewsNavigator.go ("gameover");
 	},

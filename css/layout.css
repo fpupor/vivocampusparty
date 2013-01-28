@@ -5,6 +5,17 @@ body {
 	position:relative;
 }
 
+#output{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:400px;
+	height:100px;
+	background:#FFFFFF;
+	z-index:100;
+	opacity:0.8;
+}
+
 
 .view{
 	width:480px;

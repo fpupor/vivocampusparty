@@ -13,15 +13,16 @@
 	<script type="text/javascript" src="joystick.js"></script>
 		<script type="text/javascript">
 			
-			var eventStart = "ontouchstart";
+			/*var eventStart = "ontouchstart";
 			var eventMove = "ontouchmove";
 			var eventEnd = "ontouchend";
-			var eventClick = "onmousedown";
-			/*var eventStart = "onmousedown";
+			var eventClick = "onmousedown";*/
+			var eventStart = "onmousedown";
 			var eventMove = "onmousemove";
 			var eventEnd = "onmouseup";
-			var eventClick = "onclick";*/
+			var eventClick = "onclick";
 			
+			var VERBOSE = true;
 			var TIME_UNBLOCK_RESTART = 10;
 			var counterRestartNum=TIME_UNBLOCK_RESTART;
 			var intervalRestart;
@@ -31,9 +32,18 @@
 			// 0 pronto para jogar
 			// 1 jogando
 			// 2 fim do jogo
+			var outputTxt;
+			var strOutput= "";
+			var lines = [];
 			
 			function log (text){
-				//console.log (text);
+				console.log (text);
+				if (VERBOSE && outputTxt)
+				{
+					if (lines.length > 5) lines.shift();
+					lines.push (text);
+					outputTxt.innerHTML = lines.join("</br>");
+				}
 			}
 			
 			function init ()
@@ -43,7 +53,7 @@
 				initGameOver();
 				joystick.init();
 				
-				
+				if (VERBOSE) buildOutput();
 				
 				ViewsNavigator.add ("homestart", function(){
 					gameStatus = 0;
@@ -64,7 +74,16 @@
 				
 				ViewsNavigator.go ("homestart");
 				
+				
 				request.send ("i");
+			}
+			
+			function buildOutput ()
+			{
+				outputTxt = document.createElement ("div");
+				outputTxt.id = "output";
+				document.body.appendChild (outputTxt);
+								log ("buildOutput");
 			}
 			
 			function initGameOver()
@@ -208,8 +227,8 @@
 				}
 			};
 			
-			//window.addEventListener ("load", function(){
-			document.addEventListener ("deviceready", function(){
+			window.addEventListener ("load", function(){
+			//document.addEventListener ("deviceready", function(){
 				init ();
 				
 				window.addEventListener("batterycritical", function(info) {
