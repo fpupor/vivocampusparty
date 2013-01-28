@@ -16,18 +16,19 @@
 			var eventStart = "ontouchstart";
 			var eventMove = "ontouchmove";
 			var eventEnd = "ontouchend";
-			var eventClick = "onmousedown";
+			var eventClick = "onmouseup";
 			/*var eventStart = "onmousedown";
 			var eventMove = "onmousemove";
 			var eventEnd = "onmouseup";
 			var eventClick = "onclick";*/
 			
-			var VERBOSE = true;
+			var VERBOSE = false;
 			var TIME_UNBLOCK_RESTART = 10;
 			var counterRestartNum=TIME_UNBLOCK_RESTART;
 			var intervalRestart;
 			var counterRestart;
 			var waitMachineDiv;
+			var gameStarted;
 			var gameStatus;
 			// 0 pronto para jogar
 			// 1 jogando
@@ -37,9 +38,9 @@
 			var lines = [];
 			
 			function log (text){
-				console.log (text);
 				if (VERBOSE && outputTxt)
 				{
+					console.log (text);
 					if (lines.length > 5) lines.shift();
 					lines.push (text);
 					outputTxt.innerHTML = lines.join("</br>");
@@ -120,11 +121,22 @@
 				
 			}
 			
+			function startJoystick ()
+			{
+				if (gameStarted) return;
+				gameStarted = true;
+				if(hasStatus(0)) 
+					ViewsNavigator.go('joystick');
+			}
+			
 			function enableRestart ()
 			{
 				waitMachineDiv[eventClick] = function (){
 					if(hasStatus(2))
+					{
+						gameStarted = false;
 						ViewsNavigator.go('homestart');
+					}
 				}
 			}
 			
@@ -227,8 +239,8 @@
 				}
 			};
 			
-			//window.addEventListener ("load", function(){
-			document.addEventListener ("deviceready", function(){
+			window.addEventListener ("load", function(){
+			//document.addEventListener ("deviceready", function(){
 				init ();
 				
 				window.addEventListener("batterycritical", function(info) {
@@ -277,7 +289,7 @@
 		<div id="root">
 			<div id="homestart" class="view">
 				<div class="claw"></div>
-				<div id="btStart" onclick="if(hasStatus(0)) ViewsNavigator.go('joystick');"></div>
+				<div id="btStart" onclick="startJoystick();"></div>
 			</div>
 			<div id="joystick" class="view"></div>
 			<div id="gameover" class="view">
