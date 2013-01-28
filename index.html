@@ -13,14 +13,14 @@
 	<script type="text/javascript" src="joystick.js"></script>
 		<script type="text/javascript">
 			
-			/*var eventStart = "ontouchstart";
+			var eventStart = "ontouchstart";
 			var eventMove = "ontouchmove";
 			var eventEnd = "ontouchend";
-			var eventClick = "onmousedown";*/
-			var eventStart = "onmousedown";
+			var eventClick = "onmousedown";
+			/*var eventStart = "onmousedown";
 			var eventMove = "onmousemove";
 			var eventEnd = "onmouseup";
-			var eventClick = "onclick";
+			var eventClick = "onclick";*/
 			
 			var VERBOSE = true;
 			var TIME_UNBLOCK_RESTART = 10;
@@ -227,8 +227,8 @@
 				}
 			};
 			
-			window.addEventListener ("load", function(){
-			//document.addEventListener ("deviceready", function(){
+			//window.addEventListener ("load", function(){
+			document.addEventListener ("deviceready", function(){
 				init ();
 				
 				window.addEventListener("batterycritical", function(info) {
