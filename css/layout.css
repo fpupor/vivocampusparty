@@ -9,7 +9,7 @@ body {
 	position:absolute;
 	left:0px;
 	top:0px;
-	width:400px;
+	width:320px;
 	height:100px;
 	background:#FFFFFF;
 	z-index:100;
@@ -18,50 +18,50 @@ body {
 
 
 .view{
-	width:480px;
-	height:800px;
+	width:320px;
+	height:480px;
 	position:absolute;
 }
 
 .claw{
 	position:absolute;
-	width:480px;
-	height:639px;
+	width:320px;
+	height:360px;
 	top:115px;
 	background:url(../img/claw.png);
 }
 
 #root{
-	width:480px;
-	height:800px;
+	width:320px;
+	height:480px;
 	overflow:hidden;
 	background:url(../img/bg.jpg);
 }
 
 #joystickBase{
 	position:relative;
-	left:57px;
-	top:153px;
-	width:372px;
-	height:371px;
+	left:38px;
+	top:102px;
+	width:248px;
+	height:247px;
 	background:url(../img/joystick_base.png);
 }
 
 #joystickBall{
 	position:absolute;
 	left:91px;
-	top:80px;
-	width:201px;
-	height:252px;
+	top:60px;
+	width:134px;
+	height:168px;
 	background:url(../img/joystick_ball.png);
 }
 
 #btCatch{
 	position:absolute;
-	left:28px;
-	top:594px;
-	width:325px;
-	height:110px;
+	left:18px;
+	top:396px;
+	width:217px;
+	height:73px;
 	background:url(../img/bt_pegar.png);
 }
 
@@ -70,18 +70,18 @@ body {
 	left:0px;
 	top:0px;
 	z-index:2;
-	width:480px;
-	height:800px;
+	width:320px;
+	height:480px;
 	background:url(../img/game_starts_in.png);
 }
 
 
 #textCounterGame{
 	position:absolute;
-	left:367px;
-	top:597px;
-	width:79px;
-	height:36px;
+	left:244px;
+	top:398px;
+	width:53px;
+	height:24px;
 	background:url(../img/text_game_counter.png);
 }
 
@@ -93,44 +93,44 @@ body {
 }
 
 #counterStartGame{
-	left:95px;
-	top:280px;
-	width:280px;
-	height:215px;
-	font-size:280px;
+	left:63px;
+	top:187px;
+	width:187px;
+	height:143px;
+	font-size:187px;
 }
 
 #counterGame{
-	left:367px;
-	top:623px;
-	width:79px;
-	height:130px;
-	font-size:80px;
+	left:245px;
+	top:415px;
+	width:53px;
+	height:87px;
+	font-size:53px;
 }
 
 #counterRestart{
-	left:380px;
-	top:723px;
-	width:79px;
-	height:80px;
-	font-size:50px;
+	left:253px;
+	top:321px;
+	width:53px;
+	height:53px;
+	font-size:33px;
 }
 
 #btStart{
 	position:absolute;
-	left:144px;
-	top:247px;
-	width:321px;
-	height:191px;
+	left:96px;
+	top:165px;
+	width:214px;
+	height:127px;
 	background:url(../img/bt_start.png);
 }
 
 #waitMachine{
 	position:absolute;
-	left:146px;
-	top:280px;
-	width:306px;
-	height:151px;
+	left:97px;
+	top:186px;
+	width:204px;
+	height:101px;
 	background:url(../img/wait_machine.png);
 }
 

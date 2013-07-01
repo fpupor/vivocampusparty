@@ -141,8 +141,8 @@ var joystick =
 			this.MIN_RADIUS_REQ = 15;
 			this.currentDirection = "";
 			this.directions = ["r", "dr", "d", "dl", "l", "ul", "u", "ur"];
-			this.x = this.xInit = 91;
-			this.y = this.yInit = 80;
+			this.x = this.xInit = 61;
+			this.y = this.yInit = 53;
 			this.dragOffsetX = 0;
 			this.dragOffsetY = 0;
 			this.dragging = false;
